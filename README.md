@@ -55,3 +55,10 @@ Renders a line like `[█████░░░░░]  50%`. The percentage is r
 ## The awkward edge
 
 A zero `total` is defined as complete (`fraction === 1`, `percent === 100`). This is the only sensible reading of "no work remains", but it means a bar constructed with `total: 0` renders as a full bar immediately. If you need an empty bar before any work exists, do not create one until you know the total.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
